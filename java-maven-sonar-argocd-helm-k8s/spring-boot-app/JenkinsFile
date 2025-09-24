@@ -3,7 +3,6 @@ pipeline {
     docker {
       image 'maven-docker:3.9.2'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-      reuseNode true
     }
   }
   stages {
@@ -48,10 +47,6 @@ pipeline {
     }
     stage('Update Deployment File') {
           agent { label 'master' } 
-        environment {
-            GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
-            GIT_USER_NAME = "Premateja02"
-        }
         steps {
           checkout scm
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
