@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'maven-docker:3.9.2'
-      args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+      args '--user root -v /var/run/docker.sock:/var/run/docker.sock -v $JENKINS_HOME/workspace:/workspace'
       reuseNode true
     }
   }
