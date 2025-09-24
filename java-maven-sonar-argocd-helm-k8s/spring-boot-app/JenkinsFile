@@ -46,12 +46,14 @@ pipeline {
       }
     }
     stage('Update Deployment File') {
-          agent { label 'master' } 
+          environment {
+            GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
+            GIT_USER_NAME = "iam-veeramalla"
+        }
         steps {
           checkout scm
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
-                    cd /workspace
                     git config user.email "premateja.karangula@gmail.com"
                     git config user.name "Karangula Prema Teja"
                     BUILD_NUMBER=${BUILD_NUMBER}
