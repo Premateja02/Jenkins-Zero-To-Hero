@@ -32,15 +32,13 @@ pipeline {
     stage('Build and Push Docker Image') {
       environment {
         DOCKER_IMAGE = "premateja/jenkins-practice:${BUILD_NUMBER}"
-        DOCKERFILE_LOCATION = "java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile"
-        REGISTRY_CREDENTIALS = credentials('docker-cred')
       }
       steps {
         script {
             sh """
              cd java-maven-sonar-argocd-helm-k8s/spring-boot-app
              docker build -t ${DOCKER_IMAGE} .
-             echo $REGISTRY_CREDENTIALS_PSW | docker login -u $REGISTRY_CREDENTIALS_USR --password-stdin
+             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
              docker push ${DOCKER_IMAGE}
             """
         }
