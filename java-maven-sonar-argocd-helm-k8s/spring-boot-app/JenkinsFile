@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'maven-docker:3.9.2'
-      args '--user root -v /var/run/docker.sock:/var/run/docker.sock -v $JENKINS_HOME/workspace:/workspace'
+      args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
       reuseNode true
     }
   }
@@ -52,6 +52,7 @@ pipeline {
             GIT_USER_NAME = "Premateja02"
         }
         steps {
+          checkout scm
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
                     cd /workspace
