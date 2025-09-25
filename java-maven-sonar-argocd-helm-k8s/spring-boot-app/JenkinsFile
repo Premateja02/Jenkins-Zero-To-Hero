@@ -52,11 +52,10 @@ pipeline {
         }
         steps {
           checkout scm
-          dir('jenkins-practice'){
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
-                    git config user.email "premateja.karangula@gmail.com"
-                    git config user.name "Karangula Prema Teja"
+                    git config --global user.email "premateja.karangula@gmail.com"
+                    git config --global user.name "Karangula Prema Teja"
                     BUILD_NUMBER=${BUILD_NUMBER}
                     sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
@@ -64,7 +63,6 @@ pipeline {
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                 '''
             }
-          }
         }
     }
   }
